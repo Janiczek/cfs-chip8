@@ -241,7 +241,7 @@ code8XY7 = (op) ->
         @r[x] = @r[x].mod 0x100 # 256
                 
 code8XYE = (op) ->
-    # rF = rX & 0x80, rX >>= 1
+    # rF = rX & 0x80, rX <<= 1
     x = (op & 0x0F00) >> 8
     @r[15] = (@r[x] >> 7) & 1 # leftmost bit
     @r[x] <<= 1
