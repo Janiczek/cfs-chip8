@@ -1,0 +1,14 @@
+﻿CHIP-8 emulator in JavaScript (CoffeeScript, really)
+====================================================
+
+written by Martin Janiczek (martin@janiczek.cz)
+
+based on http://codeslinger.co.uk/pages/projects/chip8.html
+     and http://www.elephantsneverforget.co.uk/rg/chip8.html
+     
+- my first attempt to write an emulator, soo... :)
+
+TODO:
+-----
+sound
+memory dump in debugger

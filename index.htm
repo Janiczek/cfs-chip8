@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>CHIP-8 emulator</title>    
+        
+        <link rel="stylesheet" href="./styles/main.css" type="text/css">
+        
+        <script type="text/javascript" src="./libs/jq.js"></script>
+        <script type="text/javascript" src="./libs/cfs.js"></script>
+        
+        <script type="text/coffeescript" src="./src/roms.coffee"></script>
+        <script type="text/coffeescript" src="./src/hardware.coffee"></script>
+        <script type="text/coffeescript" src="./src/keyboard.coffee"></script>
+        <script type="text/coffeescript" src="./src/debug.coffee"></script>
+        <script type="text/coffeescript" src="./src/draw.coffee"></script>
+    </head>
+    
+    <body>
+    
+        <noscript>CHIP-8 emulator needs Javascript to live. Enable it and come back!</noscript>
+        
+        <div id="io">
+        
+            <div id="controls">
+                <input type="submit" id="start" value="Start">
+                <input type="submit" id="stop" value="Stop">
+                <br>
+                <input type="submit" id="step" value="Step">
+                <input type="submit" id="debug" value="Debug">
+                <br>
+            </div><!-- #controls -->
+            
+            <canvas id="scr" width="192" height="96"><!-- 3x zoom -->
+                This version of your browser doesn't support canvas. Please update it.
+            </canvas>
+            <br>
+            
+            <div id="keyboard">
+                <input type="submit" id="k_1" value="1">
+                <input type="submit" id="k_2" value="2">
+                <input type="submit" id="k_3" value="3">
+                <input type="submit" id="k_C" value="C">
+                <br>
+                <input type="submit" id="k_4" value="4">
+                <input type="submit" id="k_5" value="5">
+                <input type="submit" id="k_6" value="6">
+                <input type="submit" id="k_D" value="D">
+                <br>
+                <input type="submit" id="k_7" value="7">
+                <input type="submit" id="k_8" value="8">
+                <input type="submit" id="k_9" value="9">
+                <input type="submit" id="k_E" value="E">
+                <br>
+                <input type="submit" id="k_A" value="A">
+                <input type="submit" id="k_0" value="0">
+                <input type="submit" id="k_B" value="B">
+                <input type="submit" id="k_F" value="F">
+            </div><!-- #keyboard -->
+            
+            <div id="loadroms">
+                <select>
+                    <option></option>
+                </select>
+            </div>
+            
+        </div><!-- #io -->        
+        <br>
+        
+        <div id="debugwindow">
+        
+            <table id="d_ctrls">
+                <thead>
+                    <tr>
+                        <th>PC</th>
+                        <th>I</th>
+                        <th>DT</th>
+                        <th>ST</th>
+                        <th>WAIT</th>
+                        <th>WAITR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="d_PC"></td>
+                        <td id="d_I"></td>
+                        <td id="d_DT"></td>
+                        <td id="d_ST"></td>
+                        <td id="d_WAIT"></td>
+                        <td id="d_WAITR"></td>
+                    </tr>
+                </tbody>
+            </table><!-- #d_ctrls -->
+            <table id="d_regs1">
+                <thead>
+                    <tr>
+                        <th>r0</th>
+                        <th>r1</th>
+                        <th>r2</th>
+                        <th>r3</th>
+                        <th>r4</th>
+                        <th>r5</th>
+                        <th>r6</th>
+                        <th>r7</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="d_r0"></td>
+                        <td id="d_r1"></td>
+                        <td id="d_r2"></td>
+                        <td id="d_r3"></td>
+                        <td id="d_r4"></td>
+                        <td id="d_r5"></td>
+                        <td id="d_r6"></td>
+                        <td id="d_r7"></td>
+                    </tr>
+                </tbody>
+            </table><!-- #d_regs1 -->
+            <table id="d_regs2">
+                <thead>
+                    <tr>
+                        <th>r8</th>
+                        <th>r9</th>
+                        <th>rA</th>
+                        <th>rB</th>
+                        <th>rC</th>
+                        <th>rD</th>
+                        <th>rE</th>
+                        <th>rF</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="d_r8"></td>
+                        <td id="d_r9"></td>
+                        <td id="d_rA"></td>
+                        <td id="d_rB"></td>
+                        <td id="d_rC"></td>
+                        <td id="d_rD"></td>
+                        <td id="d_rE"></td>
+                        <td id="d_rF" class="red"></td>
+                    </tr>
+                </tbody>
+            </table><!-- #d_regs2 -->
+
+            <table id="d_STCK">
+                <thead>
+                    <tr>
+                        <th>STCK</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        
+        </div>
+        
+    </body>
+    
+</html>
