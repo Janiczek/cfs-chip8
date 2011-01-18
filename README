@@ -12,3 +12,4 @@ TODO:
 -----
 sound
 memory dump in debugger
+investigate the need of @ in front of variables
