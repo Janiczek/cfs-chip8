@@ -4,17 +4,19 @@ $ ->
         key = parseInt ($(this).attr "value"),16
         if wait then KeyPressed key
         keys[key] = 1
+        if debug then UpdateDebug()
         
     $("#keyboard input").mouseup ->
         key = parseInt ($(this).attr "value"),16
         keys[key] = 0
-
-    $("#start").click ->
+        if debug then UpdateDebug()
+    
+    $("#kstart").click ->
         Start()
 
-    $("#stop").click ->
+    $("#kstop").click ->
         clearInterval t
 
-    $("#step").click ->
+    $("#kstep").click ->
         clearInterval t
         Run(1)

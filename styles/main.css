@@ -3,42 +3,19 @@
     display: none;
 }
 
-#debugwindow *
+#debugwindow textarea
 {
     font-family: monospace;
-    text-align: center;
+    font-size: 13px;
+    border: 2px solid #888;
+    resize: none; /* webkit only, but only webkit does allow resizing in the first place */
 }
 
-#d_ctrls th,
-#d_ctrls td
+#io,
+#debugwindow
 {
-    width: 40px;
-}
-
-#d_regs1 th,
-#d_regs1 td,
-#d_regs2 th,
-#d_regs2 td
-{
-    width: 30px;
-}
-
-#debugwindow th,
-#debugwindow td
-{
-    border-right: 2px solid #ccc;
-    border-bottom: 2px solid #ccc;
-    padding: 3px 7px;
-}
-
-#debugwindow td
-{
-    border-width: 1px;
-}
-
-#d_STCK
-{
-    width: 100px;
+    float: left;
+    margin: 10px;
 }
 
 #io
@@ -48,6 +25,11 @@
     background-color: #ccc;
     border: 2px solid #888;
     padding: 10px;
+}
+
+#controls input
+{
+    width: 60px;
 }
 
 #keyboard input

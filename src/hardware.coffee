@@ -29,7 +29,6 @@ for char in fonts
     tmp += 1
 
 @SetDebug = (val) ->
-
     @debug = val
     
 @CPUReset = ->
@@ -108,6 +107,7 @@ for char in fonts
     if @debug then UpdateDebug()
 
 @Run = (step = 0) ->
+    console.log "run"
 
     DoStep = ->
     
@@ -127,6 +127,7 @@ for char in fonts
             DoStep()
         
 @Start = ->
+    console.log "start"
     CPUReset()
     @t = setInterval Run, 1
                 
