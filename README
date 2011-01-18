@@ -13,3 +13,4 @@ TODO:
 sound
 memory dump in debugger
 investigate the need of @ in front of variables
+add slider/textinput for the speed of emulation
