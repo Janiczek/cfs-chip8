@@ -1,4 +1,4 @@
-﻿@z   = 3 # zoom
+@z   = 3 # zoom
 @c   = document.getElementById 'scr'
 @ctx = @c.getContext '2d'
     

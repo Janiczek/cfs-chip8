@@ -1,4 +1,4 @@
-﻿$ ->
+$ ->
 
     $("#keyboard input").mousedown ->
         key = parseInt ($(this).attr "value"),16

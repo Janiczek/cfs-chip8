@@ -1,4 +1,4 @@
-﻿@UpdateDebug = ->   
+@UpdateDebug = ->   
     
     d_PC    = $ "#d_PC"
     d_I     = $ "#d_I"

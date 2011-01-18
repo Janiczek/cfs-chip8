@@ -1,4 +1,4 @@
-﻿# ROMs taken from http://www.elephantsneverforget.co.uk/rg/games.js
+# ROMs taken from http://www.elephantsneverforget.co.uk/rg/games.js
 
 @roms = new Array()
 

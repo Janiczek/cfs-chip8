@@ -1,4 +1,4 @@
-﻿Number::mod = (n) -> ((this % n) + n) % n
+Number::mod = (n) -> ((this % n) + n) % n
 # This is for modulo with negative numbers
 # (-1).mod 256 ----> 255
 
