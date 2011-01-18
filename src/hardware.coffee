@@ -264,7 +264,7 @@ codeBNNN = (op) ->
     @pc = (nnn + @r[0]) & 0xFFF
                     
 codeCXNN = (op) ->
-    # rX = random + NN
+    # rX = random & NN
     x = (op & 0x0F00) >> 8
     nn = op & 0x00FF
     random = Math.floor (Math.random() * 0x100)
