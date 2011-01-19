@@ -22,6 +22,12 @@
         <noscript>CHIP-8 emulator needs Javascript to live. Enable it and come back!</noscript>
         
         <div id="io">
+            
+            <div id="loadroms">
+                <select>
+                    <option disabled>Load ROM:</option>
+                </select>
+            </div>
         
             <div id="controls">
                 <input type="submit" id="kstart" value="Start">
@@ -30,7 +36,6 @@
                 <input type="submit" id="kstep" value="Step">
                 <input type="submit" id="kdebug" value="Debug">
             </div><!-- #controls -->
-            <br>
             
             <canvas id="scr" width="192" height="96"><!-- 3x zoom -->
                 This version of your browser doesn't support canvas. Please update it.
@@ -58,12 +63,6 @@
                 <input type="submit" id="k_B" value="B">
                 <input type="submit" id="k_F" value="F">
             </div><!-- #keyboard -->
-            
-            <div id="loadroms">
-                <select>
-                    <option disabled>Load ROM:</option>
-                </select>
-            </div>
             
         </div><!-- #io -->  
         

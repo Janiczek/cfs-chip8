@@ -14,6 +14,7 @@ Number::mod = (n) -> ((this % n) + n) % n
 @wait    = 0
 @waitr   = 0x10
 @t       = 0
+@pc_of   = 0
 
 @perinv  = 10
 
@@ -41,6 +42,10 @@ for char in fonts
     @stck = []
     @scr  = ((0 for tmp2 in [0..31]) for tmp in [0..63])
     @wait = 0
+    
+    @pc_of = 0
+    
+    if @debug then UpdateDebug()
     
 @KeyPressed = (key) ->
 
@@ -107,18 +112,23 @@ for char in fonts
     if @debug then UpdateDebug()
 
 @Run = (step = 0) ->
-    console.log "run"
 
     DoStep = ->
+    
+        if @pc_of then return 0
     
         if @dt > 0 then @dt -= 1
         if @st > 0 then @st -= 1
         
         if @pc <= 0xFFF
             FetchDecodeLoop()
-        else clearInterval @t
-           
-    if @wait then return 0 
+        else
+            clearInterval @t
+            @CPUReset()
+            @pc_of = 1
+            return 0
+
+    if @wait or @pc_of then return 0 
     
     if step
         DoStep()
@@ -127,7 +137,6 @@ for char in fonts
             DoStep()
         
 @Start = ->
-    console.log "start"
     CPUReset()
     @t = setInterval Run, 1
                 
