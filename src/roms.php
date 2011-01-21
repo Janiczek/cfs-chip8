@@ -15,8 +15,8 @@ while(($file = $dir->read()) !== false)
     if ($file != "." && $file != "..")
         $roms[] = $file;
 
-$req_list = $_POST['fetch'];
-if (isset($req_list)) echo join("%",$roms);
+if (isset($_POST['fetch']) && $_POST['fetch'] == 1)
+    echo join("%",$roms);
 
 else
 {
