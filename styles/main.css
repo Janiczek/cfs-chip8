@@ -18,9 +18,14 @@
     margin: 10px;
 }
 
+#controls
+{
+    margin-bottom: 5px;
+}
+
 #io
 {
-    width: 200px;
+    width: 210px;
     text-align: center;
     background-color: #ccc;
     border: 2px solid #888;
@@ -29,7 +34,7 @@
 
 #controls input
 {
-    width: 60px;
+    width: 65px;
 }
 
 #keyboard input

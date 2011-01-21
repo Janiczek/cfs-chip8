@@ -15,3 +15,8 @@ investigate the need of @ in front of variables
 add slider/textinput for the speed of emulation
 sound
 memory dump in debugger
+
+FIX:
+----
+START -> wait for it to finish -> RESUME -> now clicking PAUSE or RESET doesn't work
+Jumping X and O - throws errors into the console

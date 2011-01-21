@@ -14,8 +14,8 @@ $ ->
     $("#kstart").click ->
         Start()
 
-    $("#kstop").click ->
-        clearInterval t
+    $("#kresume").click ->
+        Resume()
 
     $("#kstep").click ->
         clearInterval t

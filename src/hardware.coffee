@@ -141,6 +141,9 @@ for char in fonts
         for tmp in [perinv .. 0] by -1
             DoStep()
         
+@Resume = ->
+    @t = setInterval Run, 1
+        
 @Start = ->
     CPUReset()
     @t = setInterval Run, 1
