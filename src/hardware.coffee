@@ -40,8 +40,13 @@ for char in fonts
     @dt   = 0
     @st   = 0
     @stck = []
-    @scr  = ((0 for tmp2 in [0..31]) for tmp in [0..63])
     @wait = 0
+    
+    @scr  = ((0 for tmp2 in [0..31]) for tmp in [0..63])
+    Draw()
+    
+    clearInterval @t
+    @t = 0
     
     @pc_of = 0
     

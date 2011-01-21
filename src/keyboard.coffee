@@ -20,3 +20,7 @@ $ ->
     $("#kstep").click ->
         clearInterval t
         Run(1)
+
+    $("#kreset").click ->
+        clearInterval t
+        CPUReset()
