@@ -4,6 +4,7 @@ $ ->
         key = parseInt ($(this).attr "value"),16
         if wait then KeyPressed key
         keys[key] = 1
+        
         if debug then UpdateDebug()
         
     $("#keyboard input").mouseup ->

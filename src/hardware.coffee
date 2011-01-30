@@ -312,12 +312,12 @@ codeDXYN = (op) ->
 codeEX9E = (op) ->
     # skip if key rX is pressed
     x = (op & 0x0F00) >> 8
-    if @keys[x] then @pc += 2
+    if @keys[@r[x]] then @pc += 2
                     
 codeEXA1 = (op) ->
     # skip if key rX is not pressed
     x = (op & 0x0F00) >> 8
-    if not @keys[x] then @pc += 2
+    if not @keys[@r[x]] then @pc += 2
                     
 codeFX07 = (op) ->
     # rX = DT
