@@ -169,7 +169,6 @@ code3XNN = (op) ->
     # skip next if rX == NN
     x = (op & 0x0F00) >> 8
     nn = op & 0x00FF
-    # if @r[x] == nn then @pc += 2
     if r[x] == nn then @pc += 2
     
 code4XNN = (op) ->
