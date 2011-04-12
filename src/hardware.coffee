@@ -1,5 +1,5 @@
 Number::mod = (n) -> ((this % n) + n) % n
-# This is for modulo with negative numbers
+# modulo with negative numbers
 # (-1).mod 256 ----> 255
 
 @m       = (0 for tmp in [0..0xFFF])
@@ -13,14 +13,15 @@ Number::mod = (n) -> ((this % n) + n) % n
 @keys    = (0 for tmp in [0..15])
 @wait    = 0
 @waitr   = 0x10
-@t       = 0
-@pc_of   = 0
 
-@perinv  = 10
+@t       = 0
+pc_of    = 0
+
+perinv   = 10
 
 @debug   = 0
 
-@loc     = (tmp for tmp in [0x1b0..0x1fb] by 5)
+loc      = (tmp for tmp in [0x1b0..0x1fb] by 5)
 fonts = "F999F26227F1F8FF1F1F99F11F8F1FF8F9FF1244F9F9FF9F1FF9F99E9E9EF888FE999EF8F8FF8F88"
 tmp = 0x1b0
 for char in fonts
@@ -28,9 +29,9 @@ for char in fonts
     num <<= 4
     @m[tmp] = num
     tmp += 1
-
-@SetDebug = (val) ->
-    @debug = val
+    
+@ToggleDebug = ->
+    debug ^= 1
     
 @CPUReset = ->
 
@@ -45,26 +46,26 @@ for char in fonts
     @scr  = ((0 for tmp2 in [0..31]) for tmp in [0..63])
     Draw()
     
-    clearInterval @t
+    clearInterval t
     @t = 0
     
     @pc_of = 0
     
-    if @debug then UpdateDebug()
+    if debug then UpdateDebug()
     
 @KeyPressed = (key) ->
 
     @wait = 0
-    @r[@waitr] = key
+    @r[waitr] = key
     @waitr = 0x10  
-    if @debug then UpdateDebug()
+    if debug then UpdateDebug()
     
 @GetNextOpcode = ->
 
-    res = @m[@pc] << 8
-    res |= @m[@pc + 1]
+    result = m[pc] << 8
+    result |= m[pc + 1]
     @pc += 2
-    return res
+    return result
 
 @FetchDecodeLoop = ->
 
@@ -114,36 +115,33 @@ for char in fonts
                 when 0x0055 then codeFX55 op
                 when 0x0065 then codeFX65 op
     
-    if @debug then UpdateDebug()
+    if debug then UpdateDebug()
 
 @Run = (step = 0) ->
 
     DoStep = ->
     
-        if @pc_of then return 0
+        if pc_of then return 0
     
-        if @dt > 0 then @dt -= 1
-        if @st > 0 then @st -= 1
+        if dt > 0 then @dt -= 1
+        if st > 0 then @st -= 1
         
         if @pc <= 0xFFF
             FetchDecodeLoop()
         else
             clearInterval @t
-            @CPUReset()
+            CPUReset()
             @pc_of = 1
             return 0
 
-    if @wait or @pc_of then return 0 
+    if wait or pc_of then return 0 
     
     if step
         DoStep()
     else
         for tmp in [perinv .. 0] by -1
             DoStep()
-        
-@Resume = ->
-    @t = setInterval Run, 1
-        
+                
 @Start = ->
     CPUReset()
     @t = setInterval Run, 1
@@ -163,7 +161,7 @@ code1NNN = (op) ->
 
 code2NNN = (op) ->
     # call subroutine NNN
-    @stck.push @pc
+    @stck.push pc
     addr = op & 0xFFF
     @pc = addr
     
@@ -171,19 +169,20 @@ code3XNN = (op) ->
     # skip next if rX == NN
     x = (op & 0x0F00) >> 8
     nn = op & 0x00FF
-    if @r[x] == nn then @pc += 2
+    # if @r[x] == nn then @pc += 2
+    if r[x] == nn then @pc += 2
     
 code4XNN = (op) ->
     # skip next if rX != NN
     x = (op & 0x0F00) >> 8
     nn = op & 0x00FF
-    if @r[x] != nn then @pc += 2
+    if r[x] != nn then @pc += 2
                 
 code5XY0 = (op) ->
     # skip next if rX == rY
     x = (op & 0x0F00) >> 8
     y = (op & 0x00F0) >> 4
-    if @r[x] == @r[y] then @pc += 2
+    if r[x] == r[y] then @pc += 2
     
 code6XNN = (op) ->
     # rX = NN
@@ -202,32 +201,32 @@ code8XY0 = (op) ->
     # rX = rY
     x = (op & 0x0F00) >> 8
     y = (op & 0x00F0) >> 4
-    @r[x] = @r[y]
+    @r[x] = r[y]
                 
 code8XY1 = (op) ->
     # rX |= rY
     x = (op & 0x0F00) >> 8
     y = (op & 0x00F0) >> 4
-    @r[x] |= @r[y]
+    @r[x] |= r[y]
                 
 code8XY2 = (op) ->
     # rX &= rY
     x = (op & 0x0F00) >> 8
     y = (op & 0x00F0) >> 4
-    @r[x] &= @r[y]
+    @r[x] &= r[y]
                 
 code8XY3 = (op) ->
     # rX ^= rY
     x = (op & 0x0F00) >> 8
     y = (op & 0x00F0) >> 4
-    @r[x] ^= @r[y]
+    @r[x] ^= r[y]
                 
 code8XY4 = (op) ->
     # rX += rY, rF = carry
     x = (op & 0x0F00) >> 8
     y = (op & 0x00F0) >> 4
-    @r[x] += @r[y]
-    if @r[x] > 0xFF
+    @r[x] += r[y]
+    if r[x] > 0xFF
         @r[15] = 1
         @r[x] &= 0xFF
                 
@@ -235,16 +234,16 @@ code8XY5 = (op) ->
     # rX -= rY, rF = not borrow
     x = (op & 0x0F00) >> 8
     y = (op & 0x00F0) >> 4
-    @r[x] -= @r[y]
+    @r[x] -= r[y]
     @r[15] = 1
-    if @r[x] < 0
+    if r[x] < 0
         @r[15] = 0
-        @r[x] = @r[x].mod 0x100 # 256
+        @r[x] = r[x].mod 0x100 # 256
                 
 code8XY6 = (op) ->
     # rF = rX & 1, rX >>= 1
     x = (op & 0x0F00) >> 8
-    @r[15] = @r[x] & 1
+    @r[15] = r[x] & 1
     @r[x] >>= 1
     
                 
@@ -252,16 +251,16 @@ code8XY7 = (op) ->
     # rX = rY - rX, rF = not borrow
     x = (op & 0x0F00) >> 8
     y = (op & 0x00F0) >> 4
-    @r[x] = @r[y] - @r[x]
+    @r[x] = r[y] - r[x]
     @r[15] = 1
-    if @r[x] < 0
+    if r[x] < 0
         @r[15] = 0
-        @r[x] = @r[x].mod 0x100 # 256
+        @r[x] = r[x].mod 0x100 # 256
                 
 code8XYE = (op) ->
     # rF = rX & 0x80, rX <<= 1
     x = (op & 0x0F00) >> 8
-    @r[15] = (@r[x] >> 7) & 1 # leftmost bit
+    @r[15] = (r[x] >> 7) & 1 # leftmost bit
     @r[x] <<= 1
     @r[x] &= 0xFF
                     
@@ -269,7 +268,7 @@ code9XY0 = (op) ->
     # skip next if rX != rY
     x = (op & 0x0F00) >> 8
     y = (op & 0x00F0) >> 4
-    if @r[x] != @r[y] then @pc += 2
+    if r[x] != r[y] then @pc += 2
                     
 codeANNN = (op) ->
     # i = NNN
@@ -279,7 +278,7 @@ codeANNN = (op) ->
 codeBNNN = (op) ->
     # jump to NNN + r0
     nnn = op & 0x0FFF
-    @pc = (nnn + @r[0]) & 0xFFF
+    @pc = (nnn + r[0]) & 0xFFF
                     
 codeCXNN = (op) ->
     # rX = random & NN
@@ -290,39 +289,43 @@ codeCXNN = (op) ->
     @r[x] &= 0xFF
                     
 codeDXYN = (op) ->
-    # draw sprite at (rX,rY); height N; starting at I; rF = any_pixels_flipped_from_0_to_1?
+    # draw sprite at (rX,rY); height N; starting at I
+    # rF = any pixels flipped from 1 to 0?
     x = (op & 0x0F00) >> 8
     y = (op & 0x00F0) >> 4
     n = op & 0x000F
-    @r[15] = 0
-    for row in [0 ... n]
-        data = @m[@i + row]
-        pixinv = 7
-        for pix in [0 ... 8]
-            mask = 1 << pixinv
-            if data & mask
-                xx = @r[x] + pix
-                yy = @r[y] + row
-                if @scr[xx][yy] == 1
+    
+    @r[15] = 0 # reset carry
+    for row in [0 ... n] # how many rows?
+        data = m[i + row] # read a byte (= a row)
+        pixinv = 7 # for looking at individual bits
+        for pix in [0 ... 8] # each sprite is 8px wide
+            mask = 1 << pixinv # shift the mask bit
+            if data & mask # if the bit is 1
+            	# find the coords
+                xx = r[x] + pix
+                yy = r[y] + row
+                # if flipped from 1 to 0, set carry
+                if scr[xx][yy] == 1
                     @r[15] = 1
-                @scr[xx][yy] ^= 1
+                @scr[xx][yy] ^= 1 # flip the pixel
             pixinv -= 1
-    @Draw()
+    Draw() # call the drawing procedure
 
 codeEX9E = (op) ->
     # skip if key rX is pressed
     x = (op & 0x0F00) >> 8
-    if @keys[@r[x]] then @pc += 2
+    if keys[r[x]] then @pc += 2
                     
 codeEXA1 = (op) ->
     # skip if key rX is not pressed
     x = (op & 0x0F00) >> 8
-    if not @keys[@r[x]] then @pc += 2
+    if not keys[r[x]] then @pc += 2
                     
 codeFX07 = (op) ->
     # rX = DT
     x = (op & 0x0F00) >> 8
-    @r[x] = @dt
+    @r[x] = dt
                     
 codeFX0A = (op) ->
     # wait for keypress, store to rX
@@ -333,46 +336,46 @@ codeFX0A = (op) ->
 codeFX15 = (op) ->
     # DT = rX
     x = (op & 0x0F00) >> 8
-    @dt = @r[x]
+    @dt = r[x]
                     
 codeFX18 = (op) ->
     # ST = rX
     x = (op & 0x0F00) >> 8
-    @st = @r[x]
+    @st = r[x]
                     
 codeFX1E = (op) ->
     # i += rX, carry if overflow
     x = (op & 0x0F00) >> 8
-    @i += @r[x]
+    @i += r[x]
     @r[15] = 0
-    if @i > 0xFFF
+    if i > 0xFFF
         @i &= 0xFFF
         @r[15] = 1
                     
 codeFX29 = (op) ->
     # i = location of sprite rX
     x = (op & 0x0F00) >> 8
-    @i = @loc[@r[x]]
+    @i = loc[r[x]]
                     
 codeFX33 = (op) ->
     # m[i],m[i+1],m[i+2] = BCD(rX)
     x = (op & 0x0F00) >> 8
-    num = @r[x]
-    @m[@i]   = Math.floor (num / 100)
-    @m[@i+1] = (Math.floor (num / 10)) % 10
-    @m[@i+2] = num % 10
+    num = r[x]
+    @m[i]   = Math.floor (num / 100)
+    @m[i+1] = (Math.floor (num / 10)) % 10
+    @m[i+2] = num % 10
                     
 codeFX55 = (op) ->
     # m[i],m[i+1],...,m[i+x] = r0,r1,...,rX; i += x + 1
     x = (op & 0x0F00) >> 8
     for tmp in [0..x]
-        @m[@i+tmp] = @r[tmp]
+        @m[i+tmp] = r[tmp]
     @i += x + 1
                     
 codeFX65 = (op) ->
     # = r0,r1,...,rX = m[i],m[i+1],...,m[i+x] ; i += x + 1
     x = (op & 0x0F00) >> 8
     for tmp in [0..x]
-        @r[tmp] = @m[@i+tmp]
+        @r[tmp] = m[i+tmp]
     @i += x + 1
     

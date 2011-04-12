@@ -5,10 +5,10 @@
         <meta charset="utf-8">
         <title>CHIP-8 emulator</title>    
         
-        <link rel="stylesheet" href="./styles/main.css" type="text/css">
+        <link rel="stylesheet" href="./style.css" type="text/css">
         
-        <script type="text/javascript" src="./libs/jq.js"></script>
-        <script type="text/javascript" src="./libs/cfs.js"></script>
+        <script type="text/javascript" src="./libs/jquery.js"></script>
+        <script type="text/javascript" src="./libs/coffeescript.js"></script>
         
         <script type="text/coffeescript" src="./src/roms.coffee"></script>
         <script type="text/coffeescript" src="./src/hardware.coffee"></script>
@@ -30,12 +30,11 @@
             </div>
         
             <div id="controls">
-                <input type="submit" id="kstart" value="Start">
-                <input type="submit" id="kstep" value="Step">
+                <input type="submit" id="k_start" value="Start">
+                <input type="submit" id="k_step"  value="Step">
                 <br>
-                <input type="submit" id="kresume" value="Resume">
-                <input type="submit" id="kreset" value="Reset">
-                <input type="submit" id="kdebug" value="Debug">
+                <input type="submit" id="k_reset" value="Reset">
+                <input type="submit" id="k_debug" value="Debug">
             </div><!-- #controls -->
             
             <canvas id="scr" width="192" height="96"><!-- 3x zoom -->
@@ -68,10 +67,10 @@
         </div><!-- #io -->  
         
         <div id="debugwindow">
-            <textarea id="d_ctrls" rows=10 cols=10 readonly></textarea>
-            <textarea id="d_regs"  rows=12 cols=19 readonly></textarea>
-            <textarea id="d_keys"  rows=12 cols=19 readonly></textarea>
-            <textarea id="d_stack" rows=20 cols=7 readonly></textarea>
+            <textarea id="d_ctrls" rows=11 cols=11 readonly></textarea>
+            <textarea id="d_regs"  rows=13 cols=20 readonly></textarea>
+            <textarea id="d_keys"  rows=13 cols=20 readonly></textarea>
+            <textarea id="d_stack" rows=21 cols=8  readonly></textarea>
         </div>
         
     </body>

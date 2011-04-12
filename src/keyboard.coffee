@@ -10,18 +10,21 @@ $ ->
     $("#keyboard input").mouseup ->
         key = parseInt ($(this).attr "value"),16
         keys[key] = 0
+        
         if debug then UpdateDebug()
     
-    $("#kstart").click ->
+    $("#k_start").click ->
         Start()
 
-    $("#kresume").click ->
-        Resume()
-
-    $("#kstep").click ->
+    $("#k_step").click ->
         clearInterval t
-        Run(1)
+        Run 1
 
-    $("#kreset").click ->
+    $("#k_reset").click ->
         clearInterval t
         CPUReset()
+        
+    $("#k_debug").click ->
+        ToggleDebug()    
+        $("#debugwindow").toggle()
+        UpdateDebug()   

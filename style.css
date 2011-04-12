@@ -8,7 +8,8 @@
     font-family: monospace;
     font-size: 13px;
     border: 2px solid #888;
-    resize: none; /* webkit only, but only webkit does allow resizing in the first place */
+    resize: none; /* webkit only */
+    overflow: auto; /* hide that nasty scrollbar, IE! */
 }
 
 #io,

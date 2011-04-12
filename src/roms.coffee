@@ -1,22 +1,27 @@
-LoadRom = (data) ->
+LoadRom = (string) ->
     
-    d = new Array()
-    for x of data
-        if x % 2 == 0
-            d.push data[x]
+    temp_mem = new Array()
+    for key of string
+        # we have to form the hex number from two chars
+        # if the key is even, it's the 1st char
+        if key % 2 == 0
+            temp_mem.push string[key]
+        # else it's the 2nd char and we just contencate the two strings
         else
-            d[(x - 1) / 2] += data[x]
+            temp_mem[(key - 1) / 2] += string[key]
     
-    mi = 0x200
+    # now let's copy it into the main memory
+    mem_index = 0x200
     
-    for x in d
-        @m[mi] = parseInt x, 16
-        mi += 1
-        
-    @CPUReset()
+    for number in temp_mem
+        m[mem_index] = parseInt number, 16
+        mem_index += 1
+    
+    CPUReset()
 
 $ ->
     
+    # list of ROMs    
     roms = $.ajax({
         type: "POST"
         url: "./src/roms.php"
@@ -31,7 +36,8 @@ $ ->
 
     for tmp of info
         $("#loadroms select").append "<option>#{info[tmp]}</option>"
-        
+    
+    # selected something? load it.    
     $("#loadroms select").change ->
         name = $("#loadroms select option:selected").html()
         
