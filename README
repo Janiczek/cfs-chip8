@@ -1,0 +1,8 @@
+cfs-chip8
+---------
+
+CHIP-8 interpreter done in CoffeeScript!
+~ Written by Martin Janiczek (@janiczek)
+
+Info about CHIP-8 here:
+http://chip8.com/
